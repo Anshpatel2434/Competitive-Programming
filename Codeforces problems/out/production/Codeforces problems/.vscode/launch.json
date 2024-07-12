@@ -1,0 +1,119 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "SoldierandBananas",
+            "request": "launch",
+            "mainClass": "SoldierandBananas",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "StonesOnTheTables",
+            "request": "launch",
+            "mainClass": "StonesOnTheTables",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "BeautifulMatrix",
+            "request": "launch",
+            "mainClass": "BeautifulMatrix",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Bitplusplus",
+            "request": "launch",
+            "mainClass": "Bitplusplus",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "BoyorGirl",
+            "request": "launch",
+            "mainClass": "BoyorGirl",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Dominopiling",
+            "request": "launch",
+            "mainClass": "Dominopiling",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "HelpfullMaths",
+            "request": "launch",
+            "mainClass": "HelpfullMaths",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Nextround",
+            "request": "launch",
+            "mainClass": "Nextround",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "NtarsisSet",
+            "request": "launch",
+            "mainClass": "NtarsisSet",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "PetyaAndStrings",
+            "request": "launch",
+            "mainClass": "PetyaAndStrings",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Team",
+            "request": "launch",
+            "mainClass": "Team",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "Watermelon",
+            "request": "launch",
+            "mainClass": "Watermelon",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "WordCapitalization",
+            "request": "launch",
+            "mainClass": "WordCapitalization",
+            "projectName": "Codeforces problems_6e234864"
+        },
+        {
+            "type": "java",
+            "name": "watermelon1",
+            "request": "launch",
+            "mainClass": "watermelon1",
+            "projectName": "Codeforces problems_6e234864"
+        }
+    ]
+}
