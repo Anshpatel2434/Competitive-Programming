@@ -1,9 +1,9 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
-    static FastReader in = new FastReader();
+public class Permutation {
     static final Random random = new Random();
+    static FastReader in = new FastReader();
     static long mod = 1000000007L;
     static HashMap<String, Integer> map = new HashMap<>();
 
@@ -19,18 +19,47 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
+        int n = in.nextInt();
+        int[][] arr = new int[n][n - 1];
+        ArrayInput(arr);
+
+        int prevLess = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int count1 = 0, count2 = 0, first = 0, second = 0;
+            for (int j = 0; j < n; j++) {
+                if (count1 == 0) {
+                    first = arr[j][i];
+                }
+                if (arr[j][i] == first) {
+                    count1++;
+                }
+                if (arr[j][i] != first) {
+                    second = arr[j][i];
+                    count2++;
+                }
+            }
+
+            if (((n - 1) / 2) == i) {
+                System.out.print(prevLess + " " + ((prevLess != first) ? first : second) + " ");
+            } else {
+                System.out.print((count1 > count2) ? first + " " : second + " ");
+            }
+            prevLess = (count1 > count2) ? second : first;
+        }
+        out.println();
         out.flush();
     }
 
 
-    public static void ArrayInput(String [] arr){
-        for(int i=0; i<arr.length; i++){
+    public static void ArrayInput(String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = in.next();
         }
     }
-    public static void ArrayInput(long [][] arr){
-        for(int i=0; i<arr.length; i++){
-            for(int j=0; j<arr[0].length; j++){
+
+    public static void ArrayInput(long[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
                 arr[i][j] = in.nextLong();
             }
         }
@@ -43,75 +72,65 @@ public class Competitive {
             }
         }
     }
-    public static void ArrayInput(long [] arr){
-        for(int i=0; i<arr.length; i++){
+
+    public static void ArrayInput(long[] arr) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = in.nextLong();
         }
     }
-    public static void ArrayInput(int [] arr){
-        for(int i=0; i<arr.length; i++){
+
+    public static void ArrayInput(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = in.nextInt();
         }
     }
 
-    public static List<Map.Entry<String, Integer> > sortByValueStringBubble(HashMap<String, Integer> hm)
-    {
+    public static List<Map.Entry<String, Integer>> sortByValueStringBubble(HashMap<String, Integer> hm) {
         // Create a list from elements of HashMap
-        List<Map.Entry<String, Integer> > list =
-                new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<Map.Entry<String, Integer>>(hm.entrySet());
 
         // Sort the list
-        for(int i=0;i<list.size();i++)
-        {
-            for(int j=i;j<list.size()-1;j++)
-            {
-                if(list.get(j).getValue()>list.get(j+1).getValue())
-                {
-                    Collections.swap(list, j, j+1);
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i; j < list.size() - 1; j++) {
+                if (list.get(j).getValue() > list.get(j + 1).getValue()) {
+                    Collections.swap(list, j, j + 1);
                 }
             }
         }
 
 
-        int curr=0;
-        for(int i=0;i<list.size();i++)
-        {
-            if(list.get(i).getValue()!=list.get(curr).getValue())
-            {
-                list=bubble(list,curr,i);
-                curr=i;
+        int curr = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getValue() != list.get(curr).getValue()) {
+                list = bubble(list, curr, i);
+                curr = i;
             }
         }
 
         return list;
     }
 
-    public static List<Map.Entry<String, Integer> > bubble(List<Map.Entry<String, Integer> > list,int s,int e)
-    {
-        for(int i=s;i<e;i++)
-        {
-            for(int j=i;j<s-1;j++)
-            {
-                if(list.get(j).getKey().charAt(1)<list.get(j+1).getKey().charAt(1))
-                {
-                    Collections.swap(list, j, j+1);
+    public static List<Map.Entry<String, Integer>> bubble(List<Map.Entry<String, Integer>> list, int s, int e) {
+        for (int i = s; i < e; i++) {
+            for (int j = i; j < s - 1; j++) {
+                if (list.get(j).getKey().charAt(1) < list.get(j + 1).getKey().charAt(1)) {
+                    Collections.swap(list, j, j + 1);
                 }
             }
         }
         return list;
     }
 
-    public static HashMap<String, Integer> sortByValueString(HashMap<String, Integer> hm)
-    {
+    public static HashMap<String, Integer> sortByValueString(HashMap<String, Integer> hm) {
         // Create a list from elements of HashMap
-        List<Map.Entry<String, Integer> > list =
-                new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<Map.Entry<String, Integer>>(hm.entrySet());
 
         // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
             public int compare(Map.Entry<String, Integer> o1,
-                               Map.Entry<String, Integer> o2)
-            {
+                               Map.Entry<String, Integer> o2) {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
@@ -124,17 +143,15 @@ public class Competitive {
         return temp;
     }
 
-    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> map2)
-    {
+    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> map2) {
         // Create a list from elements of HashMap
-        List<Map.Entry<Integer, Integer> > list =
-                new LinkedList<Map.Entry<Integer, Integer> >(map2.entrySet());
+        List<Map.Entry<Integer, Integer>> list =
+                new LinkedList<Map.Entry<Integer, Integer>>(map2.entrySet());
 
         // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer> >() {
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
             public int compare(Map.Entry<Integer, Integer> o1,
-                               Map.Entry<Integer, Integer> o2)
-            {
+                               Map.Entry<Integer, Integer> o2) {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
@@ -148,10 +165,8 @@ public class Competitive {
     }
 
 
-
-    static int logab(int a, int b)
-    {
-        return (int)(Math.log(a) / Math.log(b));
+    static int logab(int a, int b) {
+        return (int) (Math.log(a) / Math.log(b));
     }
 
     static int max(int a, int b) {
