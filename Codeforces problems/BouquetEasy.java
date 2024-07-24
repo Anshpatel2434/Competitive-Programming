@@ -37,9 +37,17 @@ public class BouquetEasy {
             long nextNum = keys.get(i+1), nextFreq = freq.get(nextNum);
             if(Math.abs(currNum - nextNum) <= 1){
                 for (int j = 1; j <= currFreq; j++) {
-                    for (int k = 1; k <= nextFreq; k++) {
-                        long mul = (currNum * j) + (nextNum * k);
-                        if(mul <= m) max = Math.max(mul, max);
+                    if(currNum * j <= m){
+                        long rem = m - (currNum * j);
+                        long req = Math.min(nextFreq, rem / nextNum);
+                        long sum = (currNum * j) + (req * nextNum);
+                        if(sum <= m){
+                            max = Math.max(max, sum);
+                        }
+                    }
+                    else{
+                        long req = m / currNum;
+                        max = Math.max(max, req * currNum);
                     }
                 }
             }
