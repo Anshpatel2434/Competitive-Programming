@@ -35,6 +35,14 @@ public class Competitive {
             }
         }
     }
+
+    public static void ArrayInput(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arr[i][j] = in.nextInt();
+            }
+        }
+    }
     public static void ArrayInput(long [] arr){
         for(int i=0; i<arr.length; i++){
             arr[i] = in.nextLong();
@@ -44,6 +52,21 @@ public class Competitive {
         for(int i=0; i<arr.length; i++){
             arr[i] = in.nextInt();
         }
+    }
+
+    public static int SmallestDivisor(int n){
+
+        //this is an optimal method to find the smallest divisor of the number, in this method we iterate through all the divisor of n but in an optimal way i.e.
+        //in this loop if the i is divisor of n then it's value will always be less than root(n) and the other divisor by which we are multiplying the i to get the n
+        //it's value will always be greater than root(n) for this particular i
+        //if there is no such i then it is prime number
+
+        for (int i = 2; i * i <= n; i++) {
+            if(n % i == 0){
+                return i;
+            }
+        }
+        return 1;
     }
 
     public static List<Map.Entry<String, Integer> > sortByValueStringBubble(HashMap<String, Integer> hm)
