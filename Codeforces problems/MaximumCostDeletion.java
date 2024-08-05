@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class ScenesFromAMemory {
+public class MaximumCostDeletion {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,27 +19,25 @@ public class ScenesFromAMemory {
 
     private static void solve(PrintWriter out) {
 
-        int k = in.nextInt();
-        String s = in.next();
+        int n = in.nextInt();
+        int a = in.nextInt();
+        int b = in.nextInt();
+        String s = in.nextLine();
 
-        for (int i = 0; i < k; i++) {
-            if(s.charAt(i) == '1' || s.charAt(i) == '4' || s.charAt(i) == '6' || s.charAt(i) == '8' || s.charAt(i) == '9'){
-                System.out.println(1);
-                System.out.println(s.charAt(i));
-                return;
+        List<Character> uniqueChars = new ArrayList<>();
+        char prev = s.charAt(0);
+        uniqueChars.add(prev);
+        for (int i = 1; i < s.length(); i++) {
+            char current = s.charAt(i);
+            if (current != prev) {
+                uniqueChars.add(current);
             }
+            prev = current;
         }
+        int m = uniqueChars.size();
 
-        for (int i = 0; i < k; i++) {
-            for (int j = i+1; j < k; j++) {
-                int curr = Integer.parseInt(""+s.charAt(i)+s.charAt(j));
-                if(!isPrime(curr)){
-                    System.out.println(2);
-                    System.out.println(curr);
-                    return;
-                }
-            }
-        }
+        int result = n * a + Math.max(n * b, (m / 2 + 1) * b);
+        System.out.println(result);
 
 
         out.flush();
