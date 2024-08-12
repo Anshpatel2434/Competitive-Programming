@@ -9,36 +9,32 @@ public class BalancedShuffle {
 
     public static void main(String args[]) throws IOException {
         PrintWriter out = new PrintWriter(System.out);
-        solve(out);
-
-    }
-
-    private static void solve(PrintWriter out) {
         String s = in.nextLine();
 
-        Map<Integer, Integer> balMap = new HashMap<>();
-        int bal = 0;
-        Stack<Integer> st = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            if (i != 0) {
-                if (s.charAt(i - 1) == '(') bal++;
-                else bal--;
-            }
-            balMap.putIfAbsent(i, bal);
-            st.push(bal);
-        }
-        st.sort(Collections.reverseOrder());
-        while (!st.isEmpty()) {
-            for (int i = s.length() - 1; i >= 0; i--) {
-                if (st.peek() == balMap.getOrDefault(i, -1)) {
-                    out.print(s.charAt(i));
-                    balMap.remove(i);
-                    st.pop();
-                    break;
-                }
+        List<Tuple> b = new ArrayList<>();
+        int temp = 0;
+        int j = 1;
+
+        for (char i : s.toCharArray()) {
+            b.add(new Tuple(temp, -j, i));
+            j++;
+            if (i == '(') {
+                temp++;
+            } else {
+                temp--;
             }
         }
-        out.flush();
+
+        // Sort the list based on the balance and then by the index in reverse order
+        Collections.sort(b);
+
+        StringBuilder result = new StringBuilder();
+        for (Tuple tuple : b) {
+            result.append(tuple.character);
+        }
+
+        System.out.println(result.toString());
+
     }
 
     static long sumTillNumber(long a) {
@@ -142,6 +138,22 @@ public class BalancedShuffle {
 
 }
 
+class Tuple implements Comparable<Tuple> {
+    int temp;
+    int index;
+    char character;
 
+    Tuple(int temp, int index, char character) {
+        this.temp = temp;
+        this.index = index;
+        this.character = character;
+    }
 
-
+    @Override
+    public int compareTo(Tuple other) {
+        if (this.temp != other.temp) {
+            return Integer.compare(this.temp, other.temp);
+        }
+        return Integer.compare(this.index, other.index);
+    }
+}
