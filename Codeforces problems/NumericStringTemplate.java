@@ -29,17 +29,65 @@ public class NumericStringTemplate {
             str[i] = in.next();
         }
 
-        HashMap<Character, ArrayList<Integer>> map = new HashMap<>();
         for (int i = 0; i < m; i++) {
             gotWrong = false;
+
+            HashMap<Character, ArrayList<Long>> strCheck = new HashMap<>();
+            HashMap<Long, ArrayList<Character>> numCheck = new HashMap<>();
 
             if(str[i].length() != arr.length){
                 out.println("NO");
                 continue;
             }
+            String s = str[i];
+
+            //string part check
+            for (int j = 0; j < s.length(); j++) {
+                char c = s.charAt(j);
+                if(strCheck.containsKey(c)){
+                    ArrayList<Long> temp = strCheck.get(c);
+                    if(temp.get(temp.size()-1) != arr[j]){
+                        gotWrong = true;
+                    }
+                    else{
+                        temp.add(arr[j]);
+                        strCheck.put(c,temp);
+                    }
+                }
+                else{
+                    ArrayList<Long> temp = new ArrayList<>();
+                    temp.add(arr[j]);
+                    strCheck.put(c, temp);
+                }
+            }
+
+            //array part check
+            for (int j = 0; j < s.length(); j++) {
+                long num = arr[j];
+                if(numCheck.containsKey(num)){
+                    ArrayList<Character> temp = numCheck.get(num);
+                    if(temp.get(temp.size()-1) != str[i].charAt(j)){
+                        gotWrong = true;
+                    }
+                    else{
+                        temp.add(str[i].charAt(j));
+                        numCheck.put(num,temp);
+                    }
+                }
+                else{
+                    ArrayList<Character> temp = new ArrayList<>();
+                    temp.add(str[i].charAt(j));
+                    numCheck.put(num, temp);
+                }
+            }
 
 
-
+            if(gotWrong){
+                out.println("NO");
+            }
+            else{
+                out.println("YES");
+            }
         }
 
         out.flush();
