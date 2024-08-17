@@ -10,50 +10,38 @@ public class TripleOperations {
     public static void main(String args[]) throws IOException {
         int t = in.nextInt();
         PrintWriter out = new PrintWriter(System.out);
+
+        int max = 200007;
+        long[] curr = new long[max];
+        long[] prefixSum = new long[max];
+
+        for (int i = 1; i < max; i++) {
+            curr[i] = getNumOfDigitsBase3(i);
+            prefixSum[i] = prefixSum[i-1] + curr[i];
+        }
+
         loop:
         while (t-- > 0) {
-            solve(out);
+            solve(out, curr, prefixSum);
         }
 
     }
 
-    private static void solve(PrintWriter out) {
+    private static void solve(PrintWriter out, long[] curr, long[] prefixSum) {
 
         int l = in.nextInt();
         int r = in.nextInt();
 
-        long pow = 1;
-        long curr = 3, count = 0;
-        for (long i = l; i <= r; i++) {
-            if (i < curr) {
-                count += pow;
-            } else if (i == curr) {
-                count += pow + 1;
-            } else {
-                while (curr < i) {
-                    pow++;
-                    curr = (long) Math.pow(3, pow);
-                }
-                if (i < curr) {
-                    count += pow;
-                } else if (i == l) {
-                    if (l == curr) {
-                        count += pow + 1;
-                    } else {
-                        count += pow;
-                    }
-                }
-            }
-            if (i == l) {
-                if (l == curr) {
-                    count += pow + 1;
-                } else {
-                    count += pow;
-                }
-            }
+        System.out.println(prefixSum[r] - prefixSum[l-1] + curr[l]);
+    }
+
+    private static long getNumOfDigitsBase3(int n) {
+        long count = 0;
+        while(n > 0){
+            count++;
+            n /= 3;
         }
-        out.println(count);
-        out.flush();
+        return count;
     }
 
 
