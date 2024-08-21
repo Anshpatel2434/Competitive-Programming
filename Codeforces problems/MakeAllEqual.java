@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class MakeAllEqual {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,6 +19,16 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
+        int n = in.nextInt();
+        int max = Integer.MIN_VALUE;
+        long sum = 0;
+        int[] freq = new int[101];
+        for (int i = 0; i < n; i++) {
+            int curr = in.nextInt();
+            freq[curr]++;
+            max = Math.max(freq[curr], max);
+        }
+        out.println(n - max);
         out.flush();
     }
 

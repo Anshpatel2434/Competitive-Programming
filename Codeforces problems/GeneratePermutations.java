@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class GeneratePermutations {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,6 +19,22 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
+        int n = in.nextInt();
+        if(n % 2 == 0){
+            System.out.println(-1);
+            return;
+        }
+
+        int start = 2, end = n;
+        while (end >= 1) {
+            out.print(end + " ");
+            end -= 2;
+        }
+        while(start < n){
+            out.print(start + " ");
+            start += 2;
+        }
+        out.println();
         out.flush();
     }
 

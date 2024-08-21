@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class PermutationGame {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,7 +19,44 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
-        out.flush();
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int pb = in.nextInt();
+        int ps = in.nextInt();
+
+        int[] p = new int[n];
+        ArrayInput(p);
+        int[] a = new int[n];
+        ArrayInput(a);
+
+        //get max score for bonya for every element adding it for (k - i) times
+        long bodya = getScore(pb - 1, k, p, a);
+
+        //get max score for sasha for every element adding it for (k - i) times
+        long sasha = getScore(ps - 1, k, p, a);
+
+        if (bodya > sasha) {
+            System.out.println("Bodya");
+        } else if (sasha > bodya) {
+            System.out.println("Sasha");
+        } else {
+            System.out.println("Draw");
+        }
+    }
+
+    private static long getScore(int pos, int k, int[] p, int[] a) {
+        int n = p.length;
+        boolean[] vis = new boolean[n];
+        long prefixSum = 0, max = 0;
+        while (!vis[pos] && k > 0) {
+            vis[pos] = true;
+            max = Math.max(max, prefixSum + (long) k * a[pos]);
+            prefixSum += a[pos];
+            pos = p[pos];
+            pos--;
+            k--;
+        }
+        return max;
     }
 
 
