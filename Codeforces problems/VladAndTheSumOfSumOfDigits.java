@@ -9,25 +9,35 @@ public class VladAndTheSumOfSumOfDigits  {
     public static void main(String args[]) throws IOException {
         int t=in.nextInt();
         PrintWriter out = new PrintWriter(System.out);
+
+        //calculate sum of sum of digits till 10^5
+        int max = 200007;
+        long[] sum = new long[max + 1];
+        sum[0] = 0;
+        for (int i = 1; i <= max; i++) {
+            sum[i] = sum[i-1] + getSumOfDigits(i);
+        }
+
         loop:
         while(t-->0)
         {
-            solve(out);
+            solve(out, sum);
         }
 
     }
 
-    private static void solve(PrintWriter out) {
-        int n = in.nextInt();
-        int sum = 0;
-        for (int i = 1; i <= n; i++) {
-            String num = Integer.toString(i);
-            for (int j = 0; j < num.length(); j++) {
-                String add = "" + num.charAt(j);
-                sum += Integer.parseInt(add);
-            }
+    private static long getSumOfDigits(int n) {
+        long sum = 0L;
+        while(n > 0){
+            sum += n % 10;
+            n/=10;
         }
-        out.println(sum);
+        return sum;
+    }
+
+    private static void solve(PrintWriter out, long[] sum) {
+        int n = in.nextInt();
+        out.println(sum[n]);
         out.flush();
     }
 
