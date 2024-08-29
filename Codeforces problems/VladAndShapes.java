@@ -18,48 +18,28 @@ public class VladAndShapes  {
     private static void solve(PrintWriter out) {
         int n = in.nextInt();
         int[][] a = new int[n][n];
-        int leftMostColumn = -1, rowForLeftMostCol = -1;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                int num = in.nextInt();
-                a[i-1][j-1] = num;
-                if(num == 1){
-                    if(leftMostColumn == -1){
-                        leftMostColumn = j;
-                        rowForLeftMostCol = i;
-                    }
-                    else if(j < leftMostColumn){
-                        rowForLeftMostCol = i;
-                        leftMostColumn = j;
-                    }
+        int leftMostOne = n, rowForLeftMore = n;
+        boolean gotSquare = false;
+        for (int i = 0; i < n; i++) {
+            String s = in.next();
+            for (int j = 0; j < n; j++) {
+                a[i][j] = ((s.charAt(j) == '1')? 1 : 0);
+                if(leftMostOne > j && s.charAt(j) == '1') {
+                    leftMostOne = j;
+                    rowForLeftMore = i;
                 }
             }
         }
-        if(rowForLeftMostCol == 1){
-            if(a[rowForLeftMostCol-1][leftMostColumn-1] == a[rowForLeftMostCol][leftMostColumn-1]){
-                out.println("SQUARE");
-            }
-            else{
-                out.println("TRIANGLE");
-            }
-        }
-        else if(rowForLeftMostCol == n){
-            if(a[rowForLeftMostCol-1][leftMostColumn-1] == a[rowForLeftMostCol-2][leftMostColumn-1]){
-                out.println("SQUARE");
-            }
-            else{
-                out.println("TRIANGLE");
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a[i][j] == 1 && i != rowForLeftMore && j == leftMostOne) {
+                    gotSquare = true;
+                    break;
+                }
             }
         }
-        else{
-            if((a[rowForLeftMostCol-1][leftMostColumn-1] == a[rowForLeftMostCol-2][leftMostColumn-1])
-                    || (a[rowForLeftMostCol-1][leftMostColumn-1] == a[rowForLeftMostCol][leftMostColumn-1])){
-                out.println("SQUARE");
-            }
-            else{
-                out.println("TRIANGLE");
-            }
-        }
+        out.println(gotSquare ? "SQUARE" : "TRIANGLE");
         out.flush();
     }
 
