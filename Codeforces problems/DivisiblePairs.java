@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class DivisiblePairs {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -20,28 +20,28 @@ public class TurtleAndGoodPairs {
     private static void solve(PrintWriter out) {
 
         int n = in.nextInt();
-        String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
+        long x = in.nextLong();
+        long y = in.nextLong();
+
+        long[] a = new long[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextLong();
         }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
+
+        Map<String, Integer> cnt = new HashMap<>();
+        long ans = 0;
+
+        for (long e : a) {
+            long xx = e % x;
+            long yy = e % y;
+            String key1 = ((x - xx) % x) + "," + yy;
+            ans += cnt.getOrDefault(key1, 0);
+
+            String key2 = xx + "," + yy;
+            cnt.put(key2, cnt.getOrDefault(key2, 0) + 1);
         }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
-                }
-            }
-        }
-        out.println(ans.toString());
-        out.flush();
+
+        System.out.println(ans);
     }
 
 

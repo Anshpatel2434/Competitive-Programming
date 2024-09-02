@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class LongestGoodArray {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -10,37 +10,38 @@ public class TurtleAndGoodPairs {
     public static void main(String args[]) throws IOException {
         int t = in.nextInt();
         PrintWriter out = new PrintWriter(System.out);
+
+        int max = 200007;
+        long[] sumTillNum = new long[max + 1];
+        for (int i = 1; i <= max; i++) {
+            sumTillNum[i] = (long)((long)i * (long)(i + 1)) / 2L;
+        }
+
         loop:
         while (t-- > 0) {
-            solve(out);
+            solve(out, sumTillNum);
         }
 
     }
 
-    private static void solve(PrintWriter out) {
+    private static void solve(PrintWriter out, long sumTillNum[]) {
 
-        int n = in.nextInt();
-        String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
-        }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
-        }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
-                }
+        long l = in.nextLong();
+        long r = in.nextLong();
+
+        int ans = 0;
+        long diff = r - l;
+        for (int i = 1; i < sumTillNum.length; i++) {
+//            if(sumTillNum[i] == diff){
+//                ans = i+1;
+//                break;
+//            }
+            if(sumTillNum[i] > diff){
+                ans = i;
+                break;
             }
         }
-        out.println(ans.toString());
+        out.println(ans);
         out.flush();
     }
 

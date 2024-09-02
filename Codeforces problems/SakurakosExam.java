@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class SakurakosExam {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -18,30 +18,34 @@ public class TurtleAndGoodPairs {
     }
 
     private static void solve(PrintWriter out) {
+        int a = in.nextInt();
+        int b = in.nextInt();
 
-        int n = in.nextInt();
-        String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
+        if(a == 0){
+            if(b % 2 == 0) System.out.println("YES");
+            else System.out.println("NO");
+            return;
         }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
+
+        if(b == 0){
+            if(a % 2 == 0) System.out.println("YES");
+            else System.out.println("NO");
+            return;
         }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
-                }
-            }
+
+
+        if(a % 2 == 0 && b % 2 == 0){
+            System.out.println("YES");
         }
-        out.println(ans.toString());
-        out.flush();
+        else if(a % 2 != 0 && b % 2 != 0){
+            System.out.println("NO");
+        }
+        else if(a % 2 == 0 && b % 2 != 0){
+            System.out.println("YES");
+        }
+        else if(a % 2 != 0 && b % 2 == 0){
+            System.out.println("NO");
+        }
     }
 
 

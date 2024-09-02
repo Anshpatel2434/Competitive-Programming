@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class SquareOrNOt {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -21,26 +21,34 @@ public class TurtleAndGoodPairs {
 
         int n = in.nextInt();
         String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
+
+        int sqrt = (int)Math.sqrt(n);
+        if(sqrt * sqrt != n){
+            System.out.println("NO");
+            return;
         }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
-        }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
+
+        boolean checkOnes = false, checkZeroes = false;
+        int ptr = 0;
+        for (int i = 0; i < sqrt; i++) {
+            for (int j = 0; j < sqrt; j++) {
+                //check 1st row and last row
+                if(i == 0 || i == sqrt - 1 || j == 0 || j == sqrt - 1){
+                    if(s.charAt(ptr) == '0'){
+                        checkOnes = true;
+                        break;
+                    }
                 }
+                else{
+                    if(s.charAt(ptr) == '1'){
+                        checkZeroes = true;
+                        break;
+                    }
+                }
+                ptr++;
             }
         }
-        out.println(ans.toString());
+        out.println((checkZeroes || checkOnes)? "NO" : "YES");
         out.flush();
     }
 

@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class BinaryPath {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -20,27 +20,50 @@ public class TurtleAndGoodPairs {
     private static void solve(PrintWriter out) {
 
         int n = in.nextInt();
-        String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
-        }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
-        }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
-                }
+        String s1 = in.next();
+        String s2 = in.next();
+
+        int currPath = 0;
+        StringBuilder path = new StringBuilder();
+        path.append(s1.charAt(0));
+        String[][] mat = new String[2][n];
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < n; j++) {
+                mat[i][j] = String.valueOf((i == 0)? s1.charAt(j) : s2.charAt(j));
             }
         }
-        out.println(ans.toString());
+
+        long ways = 1;
+        long count = 1;
+        for (int i = 0; i < n; i++) {
+            if(currPath == 0){
+                if(i == n-1){
+                    path.append(s2.charAt(i));
+                    ways = count;
+                }
+                else{
+                    if(mat[0][i+1].equals(mat[1][i])){
+                        count++;
+                        path.append(s1.charAt(i+1));
+                    }
+                    else if(mat[0][i+1].equals("1") && mat[1][i].equals("0")){
+                        path.append(s2.charAt(i));
+                        ways = count;
+                        count = 1;
+                        currPath = 1;
+                    } else{
+                        path.append(s1.charAt(i+1));
+                        count = 1;
+                    }
+                }
+            }
+            else{
+                path.append(s2.charAt(i));
+            }
+        }
+        System.out.println(path.toString());
+        System.out.println(ways);
         out.flush();
     }
 

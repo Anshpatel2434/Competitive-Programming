@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class TurtleAndGoodPairs {
+public class SakurakosHobby {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -20,27 +20,44 @@ public class TurtleAndGoodPairs {
     private static void solve(PrintWriter out) {
 
         int n = in.nextInt();
+        int[] arr = new int[n + 1];
+        int[] check = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            arr[i] = in.nextInt();
+        }
+
         String s = in.next();
-        int[][] freq = new int[26][2];
-        for (int i = 0; i < 26; i++) {
-            freq[i][0] = i;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '0') check[i + 1] = 1;
         }
-        for (char ch : s.toCharArray()) {
-            freq[ch - 'a'][1]++;
-        }
-        Arrays.sort(freq, Comparator.comparingInt(a -> -1 * a[1]));
-        StringBuilder ans = new StringBuilder();
-        int total = n;
-        while (total > 0) {
-            for (int i = 0; i < 26; i++) {
-                if (freq[i][1] > 0) {
-                    ans.append((char) (freq[i][0] + 'a'));
-                    freq[i][1]--;
-                    total--;
+
+        boolean[][] vis = new boolean[n + 1][n + 1];
+        int[] ans = new int[n + 1];
+
+
+        int[] prev = arr.clone();
+        int[] curr = new int[n + 1];
+        int count = 0;
+        do {
+            count = 0;
+            for (int i = 1; i <= n; i++) {
+                if (check[prev[i]] == 1 && !vis[i][prev[i]]) {
+                    ans[i]++;
+                    vis[i][prev[i]] = true;
+                }
+                if(curr[i] != i){
+                    curr[i] = prev[prev[i]];
+                }
+                if (curr[i] == i) count++;
+                if (i == n) {
+                    prev = curr.clone();
                 }
             }
+        } while (count != n);
+        for (int i = 1; i <= n; i++) {
+            out.print(ans[i] + " ");
         }
-        out.println(ans.toString());
+        out.println();
         out.flush();
     }
 
