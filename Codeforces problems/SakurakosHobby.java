@@ -20,40 +20,30 @@ public class SakurakosHobby {
     private static void solve(PrintWriter out) {
 
         int n = in.nextInt();
-        int[] arr = new int[n + 1];
+        int[] per = new int[n + 1];
         int[] check = new int[n + 1];
-        for (int i = 1; i <= n; i++) {
-            arr[i] = in.nextInt();
-        }
-
-        String s = in.next();
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '0') check[i + 1] = 1;
-        }
-
-        boolean[][] vis = new boolean[n + 1][n + 1];
         int[] ans = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            per[i] = in.nextInt();
+        }
+        String s = in.next();
+        for (int i = 1; i <= n; i++) {
+            if(check[i] != 0) continue;
 
-
-        int[] prev = arr.clone();
-        int[] curr = new int[n + 1];
-        int count = 0;
-        do {
-            count = 0;
-            for (int i = 1; i <= n; i++) {
-                if (check[prev[i]] == 1 && !vis[i][prev[i]]) {
-                    ans[i]++;
-                    vis[i][prev[i]] = true;
-                }
-                if(curr[i] != i){
-                    curr[i] = prev[prev[i]];
-                }
-                if (curr[i] == i) count++;
-                if (i == n) {
-                    prev = curr.clone();
-                }
+            int counts = 0;
+            while(check[i] != 1){
+                check[i] = 1;
+                if(s.charAt(i-1) == '0') counts++;
+                i = per[i];
             }
-        } while (count != n);
+
+            //assign all the values including in the cycle the value of the counts
+            while(check[i] != 2){
+                check[i] = 2;
+                ans[i] = counts;
+                i = per[i];
+            }
+        }
         for (int i = 1; i <= n; i++) {
             out.print(ans[i] + " ");
         }
