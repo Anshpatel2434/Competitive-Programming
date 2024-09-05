@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class TheLegendOfFreyaTheFrog {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,7 +19,24 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
+        long x = in.nextLong();
+        long y = in.nextLong();
+        long k = in.nextLong();
 
+        long ans = 0;
+
+        long b = (y / k) + ((y % k == 0) ? 0 : 1);
+        long a = (x / k) + ((x % k == 0) ? 0 : 1);
+        if(a > b){
+            ans += (b * 2) + ((a - b) * 2);
+            out.println(ans - 1);
+        }
+        else if(a < b){
+            ans += (a * 2) + ((b - a) * 2);
+            out.println(ans);
+        }else{
+            out.println(a * 2);
+        }
         out.flush();
     }
 
@@ -56,12 +73,6 @@ public class Competitive {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = in.nextInt();
         }
-    }
-
-    //method to find the sum from the left number till the (left + right - 1)
-    private static long sumBetweenLimits(long l, long r) {
-        //this is also a formula you can use i.e (1 + 2 +...+ r) - (1 + 2 + ... + l) or else the below one
-        return (l + r - 1) * ((l + r) / 2); //multiply all the average value with the number of elements
     }
 
     //this is a method to find the xor till n without using the for loop in O(1)

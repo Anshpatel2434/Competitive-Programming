@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class FindMultisetState {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,7 +19,25 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
-
+        int n = in.nextInt();
+        int k = in.nextInt();
+        List<Integer> list = new ArrayList<>();
+        long sum = 0;
+        for (int i = 1; i <= n; i++) {
+            int curr = in.nextInt();
+            if(k != 0){
+                k--;
+                sum += curr;
+                continue;
+            }
+            if(i != n){
+                out.print(curr + " ");
+            }
+            else{
+                out.print((curr + sum) + " ");
+            }
+        }
+        out.println();
         out.flush();
     }
 
@@ -58,12 +76,6 @@ public class Competitive {
         }
     }
 
-    //method to find the sum from the left number till the (left + right - 1)
-    private static long sumBetweenLimits(long l, long r) {
-        //this is also a formula you can use i.e (1 + 2 +...+ r) - (1 + 2 + ... + l) or else the below one
-        return (l + r - 1) * ((l + r) / 2); //multiply all the average value with the number of elements
-    }
-
     //this is a method to find the xor till n without using the for loop in O(1)
     private static int XorTillNumber(int n) {
         if (n % 4 == 0) return n;
@@ -99,65 +111,6 @@ public class Competitive {
             i++;
         }
         return binaryNum;
-    }
-
-    //sliding window method to check bitwise OR of each sub array and compare it to the OR value of the arguments
-    private static boolean slidingWindowOR(List<Integer> list, int k, int ORi) {
-        int[] freqOneBit = new int[31];
-
-        //checking for the 1st window
-        for (int i = 0; i < k; i++) {
-            int curr = list.get(i);
-
-            for (int j = 30; j >= 0; j--) {
-                if (curr >= (1 << j)) {
-                    curr -= (1 << j);
-                    freqOneBit[j]++;
-                }
-            }
-        }
-
-        int or2 = 0;
-        for (int i = 0; i < freqOneBit.length; i++) {
-            if (freqOneBit[i] > 0) or2 |= (1 << i);
-        }
-
-        if (or2 != ORi) {
-            return false;
-        }
-
-        //now for all the other windows
-        for (int i = 1; i < list.size() - k + 1; i++) {
-
-            //deleting the one bits of the element that just left the window
-            int last = list.get(i - 1);
-            for (int j = 30; j >= 0; j--) {
-                if (last >= (1 << j)) {
-                    last -= (1 << j);
-                    freqOneBit[j]--;
-                    if (freqOneBit[j] == 0) {
-                        or2 -= (1 << j);
-                    }
-                }
-            }
-
-            //adding the one bits present in the next element entering the window
-            int newMember = list.get(i + k - 1);
-            for (int j = 30; j >= 0; j--) {
-                if (newMember >= (1 << j)) {
-                    newMember -= (1 << j);
-                    freqOneBit[j]++;
-                    if (freqOneBit[j] == 1) {
-                        or2 += (1 << j);
-                    }
-                }
-            }
-
-            if (or2 != ORi) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static List<Map.Entry<String, Integer>> sortByValueStringBubble(HashMap<String, Integer> hm) {

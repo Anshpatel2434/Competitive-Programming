@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Competitive {
+public class KleesSuperDuperLargeArray {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -19,7 +19,21 @@ public class Competitive {
 
     private static void solve(PrintWriter out) {
 
+        long n = in.nextLong();
+        long k = in.nextLong();
 
+        long l = k, r = k + n - 1;
+        while (l < r) {
+            long mid = l + (r - l) / 2;
+            if (sumBetweenLimits(k, mid) < sumBetweenLimits(mid, k + n - 1)) l = mid + 1;
+            else r = mid;
+        }
+
+        long result = Math.min(
+                Math.abs(sumBetweenLimits(k, l) - sumBetweenLimits(l + 1, k + n - 1)),
+                Math.abs(sumBetweenLimits(k, l - 1) - sumBetweenLimits(l, k + n - 1))
+        );
+        out.println(result);
         out.flush();
     }
 
@@ -59,9 +73,10 @@ public class Competitive {
     }
 
     //method to find the sum from the left number till the (left + right - 1)
+    //method to find the sum from the left number till the (left + right - 1)
     private static long sumBetweenLimits(long l, long r) {
         //this is also a formula you can use i.e (1 + 2 +...+ r) - (1 + 2 + ... + l) or else the below one
-        return (l + r - 1) * ((l + r) / 2); //multiply all the average value with the number of elements
+        return (l + r) * (r - l + 1) / 2; //multiply all the average value with the number of elements
     }
 
     //this is a method to find the xor till n without using the for loop in O(1)
