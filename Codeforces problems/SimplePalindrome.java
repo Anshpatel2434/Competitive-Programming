@@ -1,10 +1,7 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import java.util.*;
 import java.io.*;
 
-public class RemovalsGame {
+public class SimplePalindrome {
     static final Random random = new Random();
     static FastReader in = new FastReader();
     static long mod = 1000000007L;
@@ -23,33 +20,35 @@ public class RemovalsGame {
     private static void solve(PrintWriter out) {
 
         int n = in.nextInt();
-        int[] a = new int[n];
-        int[] b = new int[n];
-        boolean isEqual = true;
+        char[] v = {'a', 'e', 'i', 'o', 'u'};
+        Map<Character, Integer> map = new HashMap<>();
 
-        ArrayInput(a);
-        for (int i = 0; i < n; i++) {
-            b[i] = in.nextInt();
-            if(a[i] != b[i]) isEqual = false;
+        int temp = n;
+        int extra = n % 5;
+        if(n > 5){
+            for (int i = 0; i < extra; i++) {
+                map.put(v[i], map.getOrDefault(v[i], 0) + 1);
+                temp--;
+            }
         }
 
-        if(isEqual){
-            System.out.println("Bob");
-            return;
-        }
-        isEqual = true;
-        int aptr = 0;
-        for (int i = n-1; i >= 0; i--) {
-            if(a[aptr++] != b[i]) isEqual = false;
-        }
 
-        if(isEqual){
-            System.out.println("Bob");
-            return;
+        while (temp > 0) {
+            for (int i = 0; i < 5; i++) {
+                if (temp <= 0) break;
+                map.put(v[i], map.getOrDefault(v[i], 0) + 1);
+                temp--;
+            }
         }
 
-        System.out.println("Alice");
-
+        for (int i = 0; i < 5; i++) {
+            while (map.getOrDefault(v[i], 0) > 0) {
+                out.print(v[i]);
+                map.put(v[i], map.get(v[i]) - 1);
+            }
+        }
+        out.println();
+        out.flush();
     }
 
 
@@ -87,6 +86,12 @@ public class RemovalsGame {
         }
     }
 
+    //method to find the sum from the left number till the (left + right - 1)
+    private static long sumBetweenLimits(long l, long r) {
+        //this is also a formula you can use i.e (1 + 2 +...+ r) - (1 + 2 + ... + l) or else the below one
+        return (l + r - 1) * ((l + r) / 2); //multiply all the average value with the number of elements
+    }
+
     //this is a method to find the xor till n without using the for loop in O(1)
     private static int XorTillNumber(int n) {
         if (n % 4 == 0) return n;
@@ -108,6 +113,79 @@ public class RemovalsGame {
             }
         }
         return 1;
+    }
+
+    static int[] decToBinary(long n) {
+        // array to store binary number
+        int[] binaryNum = new int[32];
+        // counter for binary array
+        int i = 0;
+        while (n > 0) {
+            // storing remainder in binary array
+            binaryNum[i] = (int) n % 2;
+            n = n / 2;
+            i++;
+        }
+        return binaryNum;
+    }
+
+    //sliding window method to check bitwise OR of each sub array and compare it to the OR value of the arguments
+    private static boolean slidingWindowOR(List<Integer> list, int k, int ORi) {
+        int[] freqOneBit = new int[31];
+
+        //checking for the 1st window
+        for (int i = 0; i < k; i++) {
+            int curr = list.get(i);
+
+            for (int j = 30; j >= 0; j--) {
+                if (curr >= (1 << j)) {
+                    curr -= (1 << j);
+                    freqOneBit[j]++;
+                }
+            }
+        }
+
+        int or2 = 0;
+        for (int i = 0; i < freqOneBit.length; i++) {
+            if (freqOneBit[i] > 0) or2 |= (1 << i);
+        }
+
+        if (or2 != ORi) {
+            return false;
+        }
+
+        //now for all the other windows
+        for (int i = 1; i < list.size() - k + 1; i++) {
+
+            //deleting the one bits of the element that just left the window
+            int last = list.get(i - 1);
+            for (int j = 30; j >= 0; j--) {
+                if (last >= (1 << j)) {
+                    last -= (1 << j);
+                    freqOneBit[j]--;
+                    if (freqOneBit[j] == 0) {
+                        or2 -= (1 << j);
+                    }
+                }
+            }
+
+            //adding the one bits present in the next element entering the window
+            int newMember = list.get(i + k - 1);
+            for (int j = 30; j >= 0; j--) {
+                if (newMember >= (1 << j)) {
+                    newMember -= (1 << j);
+                    freqOneBit[j]++;
+                    if (freqOneBit[j] == 1) {
+                        or2 += (1 << j);
+                    }
+                }
+            }
+
+            if (or2 != ORi) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static List<Map.Entry<String, Integer>> sortByValueStringBubble(HashMap<String, Integer> hm) {
